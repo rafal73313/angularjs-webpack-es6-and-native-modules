@@ -7,6 +7,12 @@ var build_es6 = {
     mode: 'production',
     entry: {
         main: path.join(__dirname, './src/es6/index.js'),
+        submodules: glob.sync('*.js', {
+            cwd: path.join(__dirname, './src/es6_submodules'),
+            root: '/',
+            matchBase: true,
+            realpath: true
+        }),
         vendor: [
             'angular'
         ]
@@ -18,8 +24,16 @@ var build_es6 = {
     module: {
         rules: [
             {
-                loader: 'babel-loader',
+                test: /\.s?css$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            {
                 test: /\.js$/,
+                loader: 'babel-loader',
                 exclude: /node_module/,
                 options: {
                     presets: ['@babel/env'],
@@ -27,7 +41,10 @@ var build_es6 = {
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        new UglifyJs()
+    ]
 }
 
 var build_rest = {

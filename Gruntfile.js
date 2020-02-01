@@ -30,6 +30,7 @@ module.exports = function (grunt) {
                         './dist/vendor.*.js',
                         './dist/templates.cache.js',
                         './dist/rest.bundle.js',
+                        './dist/submodules.*.js',
                         './dist/main.*.js'
                     ]
                 }
